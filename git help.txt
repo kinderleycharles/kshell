@@ -1,0 +1,19 @@
+// To clone a repository to your computer via terminal or command prompt (MAC, Linux, or Windows)
+// Enter the following
+git clone (repository url)
+
+// To set up the local Git profile to your computer if not already done
+// Enter the following
+git config --global user.name "Insert the username here"
+git config --global user.email "Insert the account email here"
+
+// Getting the status of your repository
+// Meaning what files does it contain and what it does not contain
+// Enter
+git status
+
+// To push multiple files to the directory
+// Enter the following
+git add.
+git commit -m "Message associated to the commmitment"
+git push -u origin master
