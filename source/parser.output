@@ -1,0 +1,615 @@
+Terminals which are not used
+
+   TAB
+   GREATER
+   BSLASH
+   NPERCENT
+   EQUAL
+   SQUOTE
+
+
+Rules never reduced
+
+   22 piping: piping
+
+
+State 3 conflicts: 1 shift/reduce
+State 5 conflicts: 1 shift/reduce
+State 9 conflicts: 1 shift/reduce
+State 19 conflicts: 1 shift/reduce, 12 reduce/reduce
+State 33 conflicts: 1 shift/reduce
+State 34 conflicts: 1 shift/reduce
+State 37 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: commands $end
+
+    1 commands: /* empty */
+    2         | commands command
+
+    3 command: error_parsing
+    4        | builtin_cmd
+    5        | simple_cmd
+    6        | complex_cmd
+    7        | piping
+    8        | next_line
+
+    9 error_parsing: piping NEWLINE
+
+   10 builtin_cmd: exit_shell
+   11            | change_dir
+   12            | set_var
+   13            | unset_var
+   14            | printenv_var
+   15            | add_alias
+   16            | rm_alias
+   17            | print_alias
+
+   18 simple_cmd: WORD
+   19           | WORD arguments
+
+   20 complex_cmd: input_redirection
+   21            | output_redirection
+
+   22 piping: piping
+   23       | simple_cmd PIPE
+   24       | builtin_cmd PIPE
+
+   25 input_redirection: IREDIR WORD
+
+   26 output_redirection: OREDIR WORD
+
+   27 arguments: WORD
+   28          | STRING
+   29          | arguments WORD
+   30          | arguments STRING
+
+   31 next_line: NEWLINE
+
+   32 exit_shell: QUIT
+
+   33 change_dir: CDIR
+   34           | CDIR arguments
+
+   35 set_var: SENV WORD WORD
+   36        | SENV WORD STRING
+
+   37 unset_var: USETENV WORD
+
+   38 printenv_var: PENV
+
+   39 add_alias: ALIAS WORD WORD
+   40          | ALIAS WORD STRING
+
+   41 rm_alias: UALIAS WORD
+
+   42 print_alias: ALIAS
+   43            | ALIAS WORD
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+WORD (258) 18 19 25 26 27 29 35 36 37 39 40 41 43
+STRING (259) 28 30 36 40
+NEWLINE (260) 9 31
+TAB (261)
+CDIR (262) 33 34
+SENV (263) 35 36
+PENV (264) 38
+USETENV (265) 37
+ALIAS (266) 39 40 42 43
+UALIAS (267) 41
+QUIT (268) 32
+IREDIR (269) 25
+OREDIR (270) 26
+GREATER (271)
+PIPE (272) 23 24
+BSLASH (273)
+NPERCENT (274)
+EQUAL (275)
+SQUOTE (276)
+
+
+Nonterminals, with rules where they appear
+
+$accept (22)
+    on left: 0
+commands (23)
+    on left: 1 2, on right: 0 2
+command (24)
+    on left: 3 4 5 6 7 8, on right: 2
+error_parsing (25)
+    on left: 9, on right: 3
+builtin_cmd (26)
+    on left: 10 11 12 13 14 15 16 17, on right: 4 24
+simple_cmd (27)
+    on left: 18 19, on right: 5 23
+complex_cmd (28)
+    on left: 20 21, on right: 6
+piping (29)
+    on left: 22 23 24, on right: 7 9 22
+input_redirection (30)
+    on left: 25, on right: 20
+output_redirection (31)
+    on left: 26, on right: 21
+arguments (32)
+    on left: 27 28 29 30, on right: 19 29 30 34
+next_line (33)
+    on left: 31, on right: 8
+exit_shell (34)
+    on left: 32, on right: 10
+change_dir (35)
+    on left: 33 34, on right: 11
+set_var (36)
+    on left: 35 36, on right: 12
+unset_var (37)
+    on left: 37, on right: 13
+printenv_var (38)
+    on left: 38, on right: 14
+add_alias (39)
+    on left: 39 40, on right: 15
+rm_alias (40)
+    on left: 41, on right: 16
+print_alias (41)
+    on left: 42 43, on right: 17
+
+
+state 0
+
+    0 $accept: . commands $end
+
+    $default  reduce using rule 1 (commands)
+
+    commands  go to state 1
+
+
+state 1
+
+    0 $accept: commands . $end
+    2 commands: commands . command
+
+    $end     shift, and go to state 2
+    WORD     shift, and go to state 3
+    NEWLINE  shift, and go to state 4
+    CDIR     shift, and go to state 5
+    SENV     shift, and go to state 6
+    PENV     shift, and go to state 7
+    USETENV  shift, and go to state 8
+    ALIAS    shift, and go to state 9
+    UALIAS   shift, and go to state 10
+    QUIT     shift, and go to state 11
+    IREDIR   shift, and go to state 12
+    OREDIR   shift, and go to state 13
+
+    command             go to state 14
+    error_parsing       go to state 15
+    builtin_cmd         go to state 16
+    simple_cmd          go to state 17
+    complex_cmd         go to state 18
+    piping              go to state 19
+    input_redirection   go to state 20
+    output_redirection  go to state 21
+    next_line           go to state 22
+    exit_shell          go to state 23
+    change_dir          go to state 24
+    set_var             go to state 25
+    unset_var           go to state 26
+    printenv_var        go to state 27
+    add_alias           go to state 28
+    rm_alias            go to state 29
+    print_alias         go to state 30
+
+
+state 2
+
+    0 $accept: commands $end .
+
+    $default  accept
+
+
+state 3
+
+   18 simple_cmd: WORD .
+   19           | WORD . arguments
+
+    WORD    shift, and go to state 31
+    STRING  shift, and go to state 32
+
+    WORD      [reduce using rule 18 (simple_cmd)]
+    $default  reduce using rule 18 (simple_cmd)
+
+    arguments  go to state 33
+
+
+state 4
+
+   31 next_line: NEWLINE .
+
+    $default  reduce using rule 31 (next_line)
+
+
+state 5
+
+   33 change_dir: CDIR .
+   34           | CDIR . arguments
+
+    WORD    shift, and go to state 31
+    STRING  shift, and go to state 32
+
+    WORD      [reduce using rule 33 (change_dir)]
+    $default  reduce using rule 33 (change_dir)
+
+    arguments  go to state 34
+
+
+state 6
+
+   35 set_var: SENV . WORD WORD
+   36        | SENV . WORD STRING
+
+    WORD  shift, and go to state 35
+
+
+state 7
+
+   38 printenv_var: PENV .
+
+    $default  reduce using rule 38 (printenv_var)
+
+
+state 8
+
+   37 unset_var: USETENV . WORD
+
+    WORD  shift, and go to state 36
+
+
+state 9
+
+   39 add_alias: ALIAS . WORD WORD
+   40          | ALIAS . WORD STRING
+   42 print_alias: ALIAS .
+   43            | ALIAS . WORD
+
+    WORD  shift, and go to state 37
+
+    WORD      [reduce using rule 42 (print_alias)]
+    $default  reduce using rule 42 (print_alias)
+
+
+state 10
+
+   41 rm_alias: UALIAS . WORD
+
+    WORD  shift, and go to state 38
+
+
+state 11
+
+   32 exit_shell: QUIT .
+
+    $default  reduce using rule 32 (exit_shell)
+
+
+state 12
+
+   25 input_redirection: IREDIR . WORD
+
+    WORD  shift, and go to state 39
+
+
+state 13
+
+   26 output_redirection: OREDIR . WORD
+
+    WORD  shift, and go to state 40
+
+
+state 14
+
+    2 commands: commands command .
+
+    $default  reduce using rule 2 (commands)
+
+
+state 15
+
+    3 command: error_parsing .
+
+    $default  reduce using rule 3 (command)
+
+
+state 16
+
+    4 command: builtin_cmd .
+   24 piping: builtin_cmd . PIPE
+
+    PIPE  shift, and go to state 41
+
+    $default  reduce using rule 4 (command)
+
+
+state 17
+
+    5 command: simple_cmd .
+   23 piping: simple_cmd . PIPE
+
+    PIPE  shift, and go to state 42
+
+    $default  reduce using rule 5 (command)
+
+
+state 18
+
+    6 command: complex_cmd .
+
+    $default  reduce using rule 6 (command)
+
+
+state 19
+
+    7 command: piping .
+    9 error_parsing: piping . NEWLINE
+   22 piping: piping .
+
+    NEWLINE  shift, and go to state 43
+
+    $end      reduce using rule 7 (command)
+    $end      [reduce using rule 22 (piping)]
+    WORD      reduce using rule 7 (command)
+    WORD      [reduce using rule 22 (piping)]
+    NEWLINE   [reduce using rule 7 (command)]
+    NEWLINE   [reduce using rule 22 (piping)]
+    CDIR      reduce using rule 7 (command)
+    CDIR      [reduce using rule 22 (piping)]
+    SENV      reduce using rule 7 (command)
+    SENV      [reduce using rule 22 (piping)]
+    PENV      reduce using rule 7 (command)
+    PENV      [reduce using rule 22 (piping)]
+    USETENV   reduce using rule 7 (command)
+    USETENV   [reduce using rule 22 (piping)]
+    ALIAS     reduce using rule 7 (command)
+    ALIAS     [reduce using rule 22 (piping)]
+    UALIAS    reduce using rule 7 (command)
+    UALIAS    [reduce using rule 22 (piping)]
+    QUIT      reduce using rule 7 (command)
+    QUIT      [reduce using rule 22 (piping)]
+    IREDIR    reduce using rule 7 (command)
+    IREDIR    [reduce using rule 22 (piping)]
+    OREDIR    reduce using rule 7 (command)
+    OREDIR    [reduce using rule 22 (piping)]
+    $default  reduce using rule 7 (command)
+
+
+state 20
+
+   20 complex_cmd: input_redirection .
+
+    $default  reduce using rule 20 (complex_cmd)
+
+
+state 21
+
+   21 complex_cmd: output_redirection .
+
+    $default  reduce using rule 21 (complex_cmd)
+
+
+state 22
+
+    8 command: next_line .
+
+    $default  reduce using rule 8 (command)
+
+
+state 23
+
+   10 builtin_cmd: exit_shell .
+
+    $default  reduce using rule 10 (builtin_cmd)
+
+
+state 24
+
+   11 builtin_cmd: change_dir .
+
+    $default  reduce using rule 11 (builtin_cmd)
+
+
+state 25
+
+   12 builtin_cmd: set_var .
+
+    $default  reduce using rule 12 (builtin_cmd)
+
+
+state 26
+
+   13 builtin_cmd: unset_var .
+
+    $default  reduce using rule 13 (builtin_cmd)
+
+
+state 27
+
+   14 builtin_cmd: printenv_var .
+
+    $default  reduce using rule 14 (builtin_cmd)
+
+
+state 28
+
+   15 builtin_cmd: add_alias .
+
+    $default  reduce using rule 15 (builtin_cmd)
+
+
+state 29
+
+   16 builtin_cmd: rm_alias .
+
+    $default  reduce using rule 16 (builtin_cmd)
+
+
+state 30
+
+   17 builtin_cmd: print_alias .
+
+    $default  reduce using rule 17 (builtin_cmd)
+
+
+state 31
+
+   27 arguments: WORD .
+
+    $default  reduce using rule 27 (arguments)
+
+
+state 32
+
+   28 arguments: STRING .
+
+    $default  reduce using rule 28 (arguments)
+
+
+state 33
+
+   19 simple_cmd: WORD arguments .
+   29 arguments: arguments . WORD
+   30          | arguments . STRING
+
+    WORD    shift, and go to state 44
+    STRING  shift, and go to state 45
+
+    WORD      [reduce using rule 19 (simple_cmd)]
+    $default  reduce using rule 19 (simple_cmd)
+
+
+state 34
+
+   29 arguments: arguments . WORD
+   30          | arguments . STRING
+   34 change_dir: CDIR arguments .
+
+    WORD    shift, and go to state 44
+    STRING  shift, and go to state 45
+
+    WORD      [reduce using rule 34 (change_dir)]
+    $default  reduce using rule 34 (change_dir)
+
+
+state 35
+
+   35 set_var: SENV WORD . WORD
+   36        | SENV WORD . STRING
+
+    WORD    shift, and go to state 46
+    STRING  shift, and go to state 47
+
+
+state 36
+
+   37 unset_var: USETENV WORD .
+
+    $default  reduce using rule 37 (unset_var)
+
+
+state 37
+
+   39 add_alias: ALIAS WORD . WORD
+   40          | ALIAS WORD . STRING
+   43 print_alias: ALIAS WORD .
+
+    WORD    shift, and go to state 48
+    STRING  shift, and go to state 49
+
+    WORD      [reduce using rule 43 (print_alias)]
+    $default  reduce using rule 43 (print_alias)
+
+
+state 38
+
+   41 rm_alias: UALIAS WORD .
+
+    $default  reduce using rule 41 (rm_alias)
+
+
+state 39
+
+   25 input_redirection: IREDIR WORD .
+
+    $default  reduce using rule 25 (input_redirection)
+
+
+state 40
+
+   26 output_redirection: OREDIR WORD .
+
+    $default  reduce using rule 26 (output_redirection)
+
+
+state 41
+
+   24 piping: builtin_cmd PIPE .
+
+    $default  reduce using rule 24 (piping)
+
+
+state 42
+
+   23 piping: simple_cmd PIPE .
+
+    $default  reduce using rule 23 (piping)
+
+
+state 43
+
+    9 error_parsing: piping NEWLINE .
+
+    $default  reduce using rule 9 (error_parsing)
+
+
+state 44
+
+   29 arguments: arguments WORD .
+
+    $default  reduce using rule 29 (arguments)
+
+
+state 45
+
+   30 arguments: arguments STRING .
+
+    $default  reduce using rule 30 (arguments)
+
+
+state 46
+
+   35 set_var: SENV WORD WORD .
+
+    $default  reduce using rule 35 (set_var)
+
+
+state 47
+
+   36 set_var: SENV WORD STRING .
+
+    $default  reduce using rule 36 (set_var)
+
+
+state 48
+
+   39 add_alias: ALIAS WORD WORD .
+
+    $default  reduce using rule 39 (add_alias)
+
+
+state 49
+
+   40 add_alias: ALIAS WORD STRING .
+
+    $default  reduce using rule 40 (add_alias)
